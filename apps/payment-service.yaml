@@ -1,0 +1,21 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: payment-service
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/JimohAdebayo-DevOps/payment-service-source.git
+    targetRevision: HEAD
+    path: charts/python-app  # <--- MUST MATCH the folder structure in your Skeleton
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: payment-service
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true  # Source [5]: Namespace isolation
